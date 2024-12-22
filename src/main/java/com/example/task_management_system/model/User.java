@@ -3,9 +3,13 @@ package com.example.task_management_system.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
-@Data // Lombok annotation for getters, setters, and more
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -24,5 +28,5 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String role; // e.g., "USER", "ADMIN"
+    private String role;
 }

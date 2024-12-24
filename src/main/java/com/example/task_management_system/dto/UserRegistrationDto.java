@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UserRegistrationDto {
+    @Setter
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
     private String username;
@@ -21,18 +22,10 @@ public class UserRegistrationDto {
     @Email(message = "Please provide a valid email")
     private String email;
 
+    private String role = "ROLE_USER"; // Set default role
 
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public String getRole() {
+        return role;
     }
 
     public @NotBlank(message = "Username is required") @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters") String getUsername() {

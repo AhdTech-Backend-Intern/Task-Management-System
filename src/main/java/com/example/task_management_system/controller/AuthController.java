@@ -52,7 +52,17 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRegistrationDto userDto) {
-        userService.registerUser(userDto);
+        User user = new User();
+        user.setUsername(userDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setEmail(userDto.getEmail());
+        user.setRole(userDto.getRole());
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already in use");
+        }
+
+        userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
     }
+
 }

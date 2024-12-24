@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,11 +23,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task createTask(Task task) {
-        return taskRepository.save(task);
+        System.out.println("Saving task: " + task);
+        Task savedTask = taskRepository.save(task);
+        System.out.println("Saved task: " + savedTask);
+        return savedTask;
     }
-
-
-
 
     @Override
     public Task updateTask(Long taskId, Task task) {
@@ -55,5 +56,30 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> getTasksByUserId(Long userId) {
         return taskRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<Task> searchTasksByTitle(Long userId, String title) {
+        return taskRepository.findByUserIdAndTitleContainingIgnoreCase(userId, title);
+    }
+
+    @Override
+    public List<Task> filterTasksByCategory(Long userId, String category) {
+        return taskRepository.findByUserIdAndCategoryContainingIgnoreCase(userId, category);
+    }
+
+    @Override
+    public List<Task> filterTasksByStatus(Long userId, String status) {
+        return taskRepository.findByUserIdAndStatus(userId, status);
+    }
+
+    @Override
+    public List<Task> filterTasksByDateRange(Long userId, Date startDate, Date endDate) {
+        return taskRepository.findByUserIdAndDueDateBetween(userId, startDate, endDate);
+    }
+
+    @Override
+    public List<Task> filterTasksByPriority(Long userId, String priority) {
+        return taskRepository.findByUserIdAndPriority(userId, priority);
     }
 }

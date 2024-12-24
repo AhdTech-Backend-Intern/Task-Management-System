@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,6 +54,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserRole(Long userId, String role) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+
+        user.setRole(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUserProfile(Long userId, Map<String, String> updates) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+
+        // Update allowed fields
+        if (updates.containsKey("username")) {
+            user.setUsername(updates.get("username"));
+        }
+        if (updates.containsKey("email")) {
+            user.setEmail(updates.get("email"));
+        }
+        if (updates.containsKey("password")) {
+            user.setPassword(passwordEncoder.encode(updates.get("password")));
+        }
+
+        // Save the updated user
+        userRepository.save(user);
     }
 
 }

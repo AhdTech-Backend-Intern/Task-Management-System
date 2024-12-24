@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -32,4 +33,16 @@ public class AdminController {
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/users/{id}/role")
+    public ResponseEntity<String> updateUserRole(@PathVariable Long id, @RequestBody Map<String, String> roleUpdate) {
+        String newRole = roleUpdate.get("role");
+        if (newRole == null || newRole.isEmpty()) {
+            return ResponseEntity.badRequest().body("Role is required");
+        }
+
+        userService.updateUserRole(id, newRole);
+        return ResponseEntity.ok("User role updated successfully!");
+    }
+
 }

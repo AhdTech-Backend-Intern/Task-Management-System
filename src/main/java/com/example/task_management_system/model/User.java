@@ -3,9 +3,6 @@ package com.example.task_management_system.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "users")
 @Getter

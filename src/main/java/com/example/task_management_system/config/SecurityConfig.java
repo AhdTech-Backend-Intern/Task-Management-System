@@ -30,7 +30,17 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        // Public endpoints
                         .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**").permitAll()
+
+                        // Admin-only endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // User-only endpoints
+                        .requestMatchers("/api/tasks/**").hasRole("USER")
+                        .requestMatchers("/api/users/me").authenticated() // Allow authenticated users
+
+                        // All other requests require authentication
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))

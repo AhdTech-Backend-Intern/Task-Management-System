@@ -4,7 +4,6 @@ import com.example.task_management_system.dto.UserLoginDto;
 import com.example.task_management_system.dto.UserRegistrationDto;
 import com.example.task_management_system.model.User;
 import com.example.task_management_system.repository.UserRepository;
-import com.example.task_management_system.service.UserService;
 import com.example.task_management_system.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,23 +17,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
 
     @Autowired
-    public AuthController(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
-        this.userService = userService;
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello, World!";
     }
 
     @PostMapping("/login")

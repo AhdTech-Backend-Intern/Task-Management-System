@@ -11,12 +11,6 @@ public interface TaskService {
     void deleteTask(Long taskId);
     Task getTaskById(Long taskId);
     List<Task> getTasksByUserId(Long userId);
-
-    // New methods for filtering
-    List<Task> searchTasksByTitle(Long userId, String title);
-    List<Task> filterTasksByCategory(Long userId, String category);
-    List<Task> filterTasksByStatus(Long userId, String status);
-    List<Task> filterTasksByDateRange(Long userId, Date startDate, Date endDate);
-    List<Task> filterTasksByPriority(Long userId, String priority);
+    List<Task> filterTasks(Long userId, String title, String category, String status, String priority, Date startDate, Date endDate);
 
 }

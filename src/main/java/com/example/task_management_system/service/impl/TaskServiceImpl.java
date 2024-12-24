@@ -59,27 +59,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> searchTasksByTitle(Long userId, String title) {
-        return taskRepository.findByUserIdAndTitleContainingIgnoreCase(userId, title);
-    }
-
-    @Override
-    public List<Task> filterTasksByCategory(Long userId, String category) {
-        return taskRepository.findByUserIdAndCategoryContainingIgnoreCase(userId, category);
-    }
-
-    @Override
-    public List<Task> filterTasksByStatus(Long userId, String status) {
-        return taskRepository.findByUserIdAndStatus(userId, status);
-    }
-
-    @Override
-    public List<Task> filterTasksByDateRange(Long userId, Date startDate, Date endDate) {
-        return taskRepository.findByUserIdAndDueDateBetween(userId, startDate, endDate);
-    }
-
-    @Override
-    public List<Task> filterTasksByPriority(Long userId, String priority) {
-        return taskRepository.findByUserIdAndPriority(userId, priority);
+    public List<Task> filterTasks(Long userId, String title, String category, String status, String priority, Date startDate, Date endDate) {
+        return taskRepository.findByFilters(userId, title, category, status, priority, startDate, endDate);
     }
 }
